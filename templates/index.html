@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <section class="card">
+            <h1>URL Shortener</h1>
+            <form id="shorten-form">
+                <label for="url">Paste a long URL</label>
+                <div class="row">
+                    <input id="url" name="url" type="url" placeholder="https://example.com" required>
+                    <button type="submit">Shorten</button>
+                </div>
+            </form>
+            <p id="result" class="result" aria-live="polite"></p>
+        </section>
+
+        <section class="card recent">
+            <h2>Recent Links</h2>
+            {% if links %}
+                <ul>
+                    {% for link in links %}
+                        <li>
+                            <a href="/{{ link.short_code }}" target="_blank" rel="noopener noreferrer">/{{ link.short_code }}</a>
+                            <span>→ {{ link.original_url }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No links yet. Start by shortening a URL.</p>
+            {% endif %}
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
